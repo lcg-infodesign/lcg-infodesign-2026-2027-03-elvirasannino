@@ -42,7 +42,7 @@ function draw() {
   let campoW = 42;
   let campoH = 26;
 
-  //Interazione utente, hover esce nome delle due squadre
+  //Serve a conservare i nomi delle squadre da mostrare con l'hover
   let label = "";
 
   //titolo champions league
@@ -63,27 +63,22 @@ function draw() {
   text("LEGEND", 60, 155);
 
   const legenda =
-    "1 pitch = 1 final\n" +
-    "Pitch's left half = Winner country\n" +
-    "Pitch's right half = Loser country\n" +
-    "1 dot = 1 goal";
+    "1 pitch = 1 final\nPitch's left half = winner country\nPitch's right half = loser country\n1 dot = 1 goal";
 
   textSize(13);
   fill("#c5cbda");
   text(legenda, 60, 195);
 
-  // Spiegazione delle finali 0-0
   text(
     "If no dots appear in either half of the pitch, the final ended 0-0 and was decided on penalties.",
     60, 290, 245, 80
   );
 
-  // PAESI
   fill(255);
   textSize(14);
   text("COUNTRIES", 60, 405);
 
-  // Nazioni della legenda
+  // Array contenente i Paesi che vengono richiamati nella legenda
   let paesi = [
     "Spain", "Italy", "England",
     "Germany", "Netherlands",
@@ -93,22 +88,23 @@ function draw() {
     "Belgium", "Greece"
   ];
 
-  // Disegno i pallini colorati e i nomi dei paesi
-  for (let i = 0; i < paesi.length; i++) {
+  // Pallini colorati con i nomi dei Paesi abbinati 
+  for (let i = 0; i < paesi.length; i++) {    //.length restituisce il numero di elementi dell'array
 
     let x;
     let y;
-
+    
+    //mi serve un if else per disporre poi i Paesi lungo due colonne
     if (i < 7) {
       x = 62;
-      y = 445 + i * 25;
+      y = 445 + i * 25; //aumenta di 25px a ogni interazione
     } else {
       x = 193;
-      y = 445 + (i - 7) * 25;
+      y = 445 + (i - 7) * 25; //bisogna far ripartire la posizione verticale dall'inizio
     }
 
     noStroke();
-    fill(coloreNazione[paesi[i]]);
+    fill(coloreNazione[paesi[i]]); //assegna al cerchietto il colore della nazione corrispondente
     circle(x, y, 10);
 
     fill("#c5cbda");
@@ -129,21 +125,19 @@ function draw() {
   );
 
 
-  //ogni riga del file CSV presenta una finale
+  //ciclo for permette di esplorare riga per riga il dataset
   for(let i = 0; i < data.getRowCount(); i++){
 
-    //leggere nel CSV le nazioni delle due squadre
+    //leggo nel CSV i nomi delle nazioni, delle due squadre e il numero di goal
     let paeseVincitore = data.getString(i, "WinnerCountry");
     let paeseSconfitto = data.getString(i, "RunnerCountry");
-    //leggo i nomi delle due squadre
     let squadraVincitrice = data.getString(i, "Winners");
     let squadraSconfitta = data.getString(i, "Runners-up");
-    //leggo anche il n. di gol segnati da una e dall'altra
     let golVincitore = data.getNum(i, "WinnerGoals");
     let golSconfitto = data.getNum(i, "RunnerGoals");
 
     //calcolare la posizione sulla spirale (esempio parole visto a lezione)
-    //però non uso un incremento dell'angolo costante ma varia in base al raggio
+    //però non uso un incremento dell'angolo costante, ma lo faccio variare in base al raggio
     radius += 4.5;
     angle += 48 / radius;
 
@@ -158,7 +152,7 @@ function draw() {
     fill(coloreNazione[paeseSconfitto]);
     rect(x, y - campoH/2, campoW/2, campoH);
 
-    //linee per far capire che è un campo
+    //linee bianche e cerchio centrale per far capire che è un campo
     noFill();
     stroke(255);
     strokeWeight(1);
@@ -167,17 +161,17 @@ function draw() {
     line(x, y - campoH/2, x, y + campoH/2);
     circle(x, y, 7);
 
-    //area di rigore
+    //aree di rigore
     rect(x - campoW/2, y - 7, 8, 14);
     rect(x + campoW/2 - 8, y - 7, 8, 14);
 
-    //disegno cerchi per i gol
+    //disegno cerchi per i goal
     noStroke();
     fill(0);
 
     //gol squadra vincitrice sx
     for(let i = 0; i < golVincitore; i++){
-      circle(x - 15 + (i % 2) * 7, y - 8 + floor(i / 2) * 6, 4);
+      circle(x - 15 + (i % 2) * 7, y - 8 + floor(i / 2) * 6, 4); //mi serviva disporre i goal lungo due colonne
     }
 
     //gol squadra perdente dx
@@ -185,15 +179,15 @@ function draw() {
       circle(x + 6 + (i % 2) * 7, y - 8 + floor(i / 2) * 6, 4);
     }
 
-    //segno il primo anno
+    //primo anno
     if (i == 0){
       fill("rgb(249, 250, 249)");
       noStroke();
       textSize(13);
-      text("1955", x, y + campoH/2 - 50);
+      text("1955", x, y + campoH/2 - 50); //compare sopra il primo campo
     }
 
-    //segno l'ultimo anno
+    //ultimo anno
     if(i == data.getRowCount() - 1){
       fill("rgb(249, 250, 249)");
       noStroke();
@@ -201,7 +195,7 @@ function draw() {
       text("2023", x, y + campoH/2 - 50);
     }
 
-    //controllo se il mouse si trova sul campo
+    //controllo se il mouse si trova sul campo (esempio visto a lezione)
     if (
       mouseX >= x - campoW/2 &&
       mouseX <= x + campoW/2 &&
