@@ -55,18 +55,18 @@ function draw() {
   //sottotitolo 
   fill("#aab3c8");
   textSize(13);
-  text("Le finali dal 1955 al 2023", 60, 85);
+  text("The finals from 1955 to 2023", 60, 85);
 
   //legenda
   fill(255);
   textSize(17);
-  text("LEGENDA", 60, 155);
+  text("LEGEND", 60, 155);
 
   const legenda =
-    "1 campo = 1 finale\n" +
-    "Metà campo sinistra = Paese vincitore\n" +
-    "Metà campo destra = Paese sconfitto\n" +
-    "1 pallino = 1 goal";
+    "1 pitch = 1 final\n" +
+    "Pitch's left half = Winner country\n" +
+    "Pitch's right half = Loser country\n" +
+    "1 dot = 1 goal";
 
   textSize(13);
   fill("#c5cbda");
@@ -74,14 +74,14 @@ function draw() {
 
   // Spiegazione delle finali 0-0
   text(
-    "Se non compaiono pallini in nessuna delle due metà campo la finale è terminata 0-0 ed è stata poi decisa ai rigori.",
+    "If no dots appear in either half of the pitch, the final ended 0-0 and was decided on penalties.",
     60, 290, 245, 80
   );
 
   // PAESI
   fill(255);
   textSize(14);
-  text("PAESI", 60, 405);
+  text("COUNTRIES", 60, 405);
 
   // Nazioni della legenda
   let paesi = [
@@ -91,15 +91,6 @@ function draw() {
     "Scotland", "Romania",
     "Yugoslavia", "Sweden",
     "Belgium", "Greece"
-  ];
-
-  let nomiPaesi = [
-    "Spagna", "Italia", "Inghilterra",
-    "Germania", "Paesi Bassi",
-    "Portogallo", "Francia",
-    "Scozia", "Romania",
-    "Jugoslavia", "Svezia",
-    "Belgio", "Grecia"
   ];
 
   // Disegno i pallini colorati e i nomi dei paesi
@@ -123,7 +114,7 @@ function draw() {
     fill("#c5cbda");
     textAlign(LEFT, CENTER);
     textSize(12);
-    text(nomiPaesi[i], x + 13, y);
+    text(paesi[i], x + 13, y);
   }
 
   // Istruzione finale per l'interazione
@@ -133,7 +124,7 @@ function draw() {
   textSize(13);
 
   text(
-    "Passa il mouse sui campi per leggere i nomi delle due squadre che hanno disputato la finale.",
+    "Hover over the pitches to read the names of the two teams that played the final.",
     60, 660, 245, 70
   );
 
